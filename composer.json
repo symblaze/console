@@ -1,0 +1,19 @@
+{
+    "name": "symblaze/console",
+    "description": "Fluent configuration for Symfony console",
+    "require": {
+        "illuminate/console": "^10.38"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Symblaze\\Console\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "imdhemy",
+            "email": "imdhemy@gmail.com"
+        }
+    ]
+}
