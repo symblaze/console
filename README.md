@@ -6,7 +6,7 @@ multiple lines of code for each command you want to create, and that configurati
 that you want to implement.
 
 Symblaze Console is a library that allows you to configure your console commands using the Symfony `AsCommand`
-annotation. It's inspired by the Laravel Artisan console, and it's built on top of the Symfony console component.
+attribute. It's inspired by the Laravel Artisan console, and it's built on top of the Symfony console component.
 
 ## Installation
 
