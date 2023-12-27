@@ -1,19 +1,29 @@
 {
     "name": "symblaze/console",
     "description": "Fluent configuration for Symfony console",
-    "require": {
-        "illuminate/console": "^10.38"
-    },
     "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Symblaze\\Console\\": "src/"
-        }
-    },
     "authors": [
         {
             "name": "imdhemy",
             "email": "imdhemy@gmail.com"
         }
-    ]
+    ],
+    "require": {
+        "illuminate/console": "^10.38",
+        "symfony/console": "*"
+    }
+    ,
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
+    },
+    "autoload": {
+        "psr-4": {
+            "Symblaze\\Console\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Symblaze\\Console\\Tests\\": "tests/"
+        }
+    }
 }
