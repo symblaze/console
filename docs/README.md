@@ -107,3 +107,23 @@ You can define a description for each argument or option by adding a `:` after t
 ```php
 AsCommand(name: 'mail:send {user : The user ID} {--queue : The queue ID}')
 ```
+
+## Command Input Output
+
+### Retrieve input values
+
+You can retrieve the value of an argument or option using the `argument` and `option` methods:
+
+```php
+$user = $this->argument('user');
+
+$queue = $this->option('queue');
+```
+
+In case you want to retrieve all the arguments or options, you can use the `arguments` and `options` methods:
+
+```php
+$arguments = $this->arguments();
+
+$options = $this->options();
+```

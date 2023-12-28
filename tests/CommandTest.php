@@ -6,6 +6,8 @@ namespace Symblaze\Console\Tests;
 
 use Symblaze\Console\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 final class CommandTest extends TestCase
 {
@@ -130,11 +132,46 @@ final class CommandTest extends TestCase
         $this->assertTrue($command->getDefinition()->hasOption('option'));
         $this->assertSame('Option description', $command->getDefinition()->getOption('option')->getDescription());
     }
+
+    /** @test */
+    public function determine_if_an_argument_is_present(): void
+    {
+        $command = new MyCommand();
+        $this->executeCommand($command, ['required_argument' => 'value']);
+
+        $this->assertTrue($command->hasArgument('required_argument'));
+        $this->assertTrue($command->hasArgument('optional_argument'));
+    }
+
+    /** @test */
+    public function get_value_of_an_argument(): void
+    {
+        $command = new MyCommand();
+        $this->executeCommand($command, ['required_argument' => 'value']);
+
+        $this->assertSame('value', $command->argument('required_argument'));
+        $this->assertNull($command->argument('optional_argument'));
+        $this->assertSame('default', $command->argument('argument_with_value'));
+    }
+
+    /** @test */
+    public function get_all_arguments(): void
+    {
+        $command = new MyCommand();
+        $this->executeCommand($command, ['required_argument' => 'value']);
+
+        $expected = ['required_argument' => 'value', 'optional_argument' => null, 'argument_with_value' => 'default'];
+        $this->assertSame($expected, $command->arguments());
+    }
 }
 
 #[AsCommand(name: 'acme:command {required_argument} {optional_argument?} {argument_with_value=default} {--O|option} {--OWV|option_with_value=} {--OWDV|option_with_default=default}')]
 class MyCommand extends Command
 {
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        return self::SUCCESS;
+    }
 }
 
 #[AsCommand(name: 'acme:array:command {argument_array*} {--option_array=*}')]
