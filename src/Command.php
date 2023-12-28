@@ -30,4 +30,28 @@ abstract class Command extends SymfonyCommand
 
         return parent::run($input, $output);
     }
+
+    /**
+     * Determine if the given argument is present.
+     */
+    public function hasArgument($name): bool
+    {
+        return $this->input->hasArgument($name);
+    }
+
+    /**
+     * Get the value of a command argument.
+     */
+    public function argument(string $key): bool|array|string|null
+    {
+        return $this->input->getArgument($key);
+    }
+
+    /**
+     * Get all the arguments passed to the command.
+     */
+    public function arguments(): array
+    {
+        return $this->input->getArguments();
+    }
 }
