@@ -140,7 +140,7 @@ final class CommandTest extends TestCase
         $this->executeCommand($command, ['required_argument' => 'value']);
 
         $this->assertTrue($command->hasArgument('required_argument'));
-        $this->assertTrue($command->hasArgument('optional_argument'));
+        $this->assertFalse($command->hasArgument('optional_argument'));
     }
 
     /** @test */
@@ -162,6 +162,38 @@ final class CommandTest extends TestCase
 
         $expected = ['required_argument' => 'value', 'optional_argument' => null, 'argument_with_value' => 'default'];
         $this->assertSame($expected, $command->arguments());
+    }
+
+    /** @test */
+    public function determine_if_an_option_is_present(): void
+    {
+        $command = new MyCommand();
+        $this->executeCommand($command, ['required_argument' => 'value', '--option' => true]);
+
+        $this->assertTrue($command->hasOption('option'));
+        $this->assertFalse($command->hasOption('option_with_value'));
+        $this->assertTrue($command->hasOption('option_with_default'));
+    }
+
+    /** @test */
+    public function get_value_of_an_option(): void
+    {
+        $command = new MyCommand();
+        $this->executeCommand($command, ['required_argument' => 'value', '--option' => true]);
+
+        $this->assertTrue($command->option('option'));
+        $this->assertNull($command->option('option_with_value'));
+        $this->assertSame('default', $command->option('option_with_default'));
+    }
+
+    /** @test */
+    public function get_all_options(): void
+    {
+        $command = new MyCommand();
+        $this->executeCommand($command, ['required_argument' => 'value', '--option' => true]);
+
+        $expected = ['option' => true, 'option_with_value' => null, 'option_with_default' => 'default'];
+        $this->assertSame($expected, $command->options());
     }
 }
 
