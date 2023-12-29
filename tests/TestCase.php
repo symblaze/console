@@ -29,13 +29,17 @@ class TestCase extends \PHPUnit\Framework\TestCase
         return $command->run($input, $this->output = $this->initOutput($options));
     }
 
-    protected function getDisplay(): string
+    protected function getDisplay(bool $normalize = false): string
     {
         rewind($this->output->getStream());
 
         $display = stream_get_contents($this->output->getStream());
 
-        return ltrim(str_replace(PHP_EOL, "", $display));
+        if ($normalize) {
+            $display = str_replace(PHP_EOL, "\n", $display);
+        }
+
+        return $display;
     }
 
     private function createStream(array $inputs)
