@@ -190,4 +190,40 @@ final class CommandTest extends TestCase
         $expected = ['option' => true, 'option_with_value' => null, 'option_with_default' => 'default'];
         $this->assertSame($expected, $command->options());
     }
+
+    /** @test */
+    public function write_message_with_line(): void
+    {
+        $command = new Doubles\MyCommand();
+        $this->executeCommand($command, ['required_argument' => 'value']);
+
+        $command->line('Hello world');
+
+        $display = $this->getDisplay();
+        $this->assertSame('Hello world'.PHP_EOL, $display);
+    }
+
+    /** @test */
+    public function write_styled_message_with_line(): void
+    {
+        $command = new Doubles\MyCommand();
+        $this->executeCommand($command, ['required_argument' => 'value']);
+
+        $command->line('Hello world', 'info');
+
+        $display = $this->getDisplay();
+        $this->assertSame('Hello world'.PHP_EOL, $display);
+    }
+
+    /** @test */
+    public function write_verbose_message_with_line(): void
+    {
+        $command = new Doubles\MyCommand();
+        $this->executeCommand($command, ['required_argument' => 'value']);
+
+        $command->line('Hello world', null, 'quite');
+
+        $display = $this->getDisplay();
+        $this->assertSame('Hello world'.PHP_EOL, $display);
+    }
 }

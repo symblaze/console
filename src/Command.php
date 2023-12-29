@@ -14,6 +14,14 @@ abstract class Command extends SymfonyCommand
 {
     use InteractsWithIO;
 
+    private const VERBOSITY_MAP = [
+        'v' => OutputInterface::VERBOSITY_VERBOSE,
+        'vv' => OutputInterface::VERBOSITY_VERY_VERBOSE,
+        'vvv' => OutputInterface::VERBOSITY_DEBUG,
+        'quiet' => OutputInterface::VERBOSITY_QUIET,
+        'normal' => OutputInterface::VERBOSITY_NORMAL,
+    ];
+
     protected function configure(): void
     {
         [$name, $arguments, $options] = Parser::parse(static::getDefaultName());
@@ -71,5 +79,24 @@ abstract class Command extends SymfonyCommand
     protected function arguments(): array
     {
         return $this->input->getArguments();
+    }
+
+    /**
+     * Writes a message to the output and adds a newline at the end.
+     */
+    protected function line(string $message, ?string $style = null, string|int $verbosity = 'normal'): void
+    {
+        $styled = $style ? "<$style>$message</$style>" : $message;
+
+        $this->output->writeln($styled, $this->parseVerbosity($verbosity));
+    }
+    
+    private function parseVerbosity(int|string $level): int
+    {
+        if (is_int($level)) {
+            return $level;
+        }
+
+        return self::VERBOSITY_MAP[$level] ?? $this->verbosity;
     }
 }

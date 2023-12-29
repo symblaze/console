@@ -58,4 +58,9 @@ class MyCommand extends Command
     {
         return $this->input->getArguments();
     }
+
+    public function line(string $message, ?string $style = null, int|string $verbosity = 'normal'): void
+    {
+        parent::line($message, $style, $verbosity);
+    }
 }
