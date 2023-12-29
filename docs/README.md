@@ -127,3 +127,18 @@ $arguments = $this->arguments();
 
 $options = $this->options();
 ```
+
+### Determine if an input is present
+
+You can determine if an argument or option is present using the `hasArgument` and `hasOption` methods. Both
+methods return `true` exists and is not `null`:
+
+```php
+if ($this->hasArgument('user')) {
+    //...
+}
+
+if ($this->hasOption('queue')) {
+    //...
+}
+```

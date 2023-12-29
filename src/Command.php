@@ -36,7 +36,7 @@ abstract class Command extends SymfonyCommand
      */
     public function hasArgument($name): bool
     {
-        return $this->input->hasArgument($name);
+        return $this->input->hasArgument($name) && ! is_null($this->argument($name));
     }
 
     /**
