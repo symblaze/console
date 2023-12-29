@@ -16,4 +16,46 @@ class MyCommand extends Command
     {
         return self::SUCCESS;
     }
+
+    /**
+     * Determine if the given argument is present.
+     */
+    public function hasArgument($name): bool
+    {
+        return $this->input->hasArgument($name) && ! is_null($this->argument($name));
+    }
+
+    /**
+     * Determine if the given option is present.
+     */
+    public function hasOption($name): bool
+    {
+        return $this->input->hasOption($name) && ! is_null($this->option($name));
+    }
+
+    public function option(string $key): bool|array|string|null
+    {
+        return $this->input->getOption($key);
+    }
+
+    public function options(): array
+    {
+        return $this->input->getOptions();
+    }
+
+    /**
+     * Get the value of a command argument.
+     */
+    public function argument(string $key): bool|array|string|null
+    {
+        return $this->input->getArgument($key);
+    }
+
+    /**
+     * Get all the arguments passed to the command.
+     */
+    public function arguments(): array
+    {
+        return $this->input->getArguments();
+    }
 }
