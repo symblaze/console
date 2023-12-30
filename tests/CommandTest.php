@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Symblaze\Console\Tests;
 
+use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 final class CommandTest extends TestCase
 {
@@ -199,7 +201,7 @@ final class CommandTest extends TestCase
     {
         $command = new Doubles\MyCommand();
         $command->setInput($this->createMock(InputInterface::class));
-        $outputMock = $this->createMock(OutputInterface::class);
+        $outputMock = $this->createMock(SymfonyStyle::class);
         $command->setOutput($outputMock);
 
         $outputMock->expects($this->once())->method('writeln')->with('Hello world');
@@ -212,7 +214,7 @@ final class CommandTest extends TestCase
     {
         $command = new Doubles\MyCommand();
         $command->setInput($this->createMock(InputInterface::class));
-        $outputMock = $this->createMock(OutputInterface::class);
+        $outputMock = $this->createMock(SymfonyStyle::class);
         $command->setOutput($outputMock);
 
         $outputMock->expects($this->once())->method('writeln')->with('<info>Hello world</info>');
@@ -225,7 +227,7 @@ final class CommandTest extends TestCase
     {
         $command = new Doubles\MyCommand();
         $command->setInput($this->createMock(InputInterface::class));
-        $outputMock = $this->createMock(OutputInterface::class);
+        $outputMock = $this->createMock(SymfonyStyle::class);
         $command->setOutput($outputMock);
 
         $outputMock->expects($this->once())->method('writeln')->with('Hello world', OutputInterface::VERBOSITY_DEBUG);
@@ -238,10 +240,10 @@ final class CommandTest extends TestCase
     {
         $command = new Doubles\MyCommand();
         $command->setInput($this->createMock(InputInterface::class));
-        $outputMock = $this->createMock(OutputInterface::class);
+        $outputMock = $this->createMock(SymfonyStyle::class);
         $command->setOutput($outputMock);
 
-        $outputMock->expects($this->once())->method('writeln')->with('<info>Hello world</info>');
+        $outputMock->expects($this->once())->method('info')->with('Hello world');
 
         $command->info('Hello world');
     }
@@ -251,10 +253,10 @@ final class CommandTest extends TestCase
     {
         $command = new Doubles\MyCommand();
         $command->setInput($this->createMock(InputInterface::class));
-        $outputMock = $this->createMock(OutputInterface::class);
+        $outputMock = $this->createMock(SymfonyStyle::class);
         $command->setOutput($outputMock);
 
-        $outputMock->expects($this->once())->method('writeln')->with('<comment>Hello world</comment>');
+        $outputMock->expects($this->once())->method('comment')->with('Hello world');
 
         $command->comment('Hello world');
     }
@@ -264,7 +266,7 @@ final class CommandTest extends TestCase
     {
         $command = new Doubles\MyCommand();
         $command->setInput($this->createMock(InputInterface::class));
-        $outputMock = $this->createMock(OutputInterface::class);
+        $outputMock = $this->createMock(SymfonyStyle::class);
         $command->setOutput($outputMock);
 
         $outputMock->expects($this->once())->method('writeln')->with('<question>Hello world</question>');
@@ -277,10 +279,10 @@ final class CommandTest extends TestCase
     {
         $command = new Doubles\MyCommand();
         $command->setInput($this->createMock(InputInterface::class));
-        $outputMock = $this->createMock(OutputInterface::class);
+        $outputMock = $this->createMock(SymfonyStyle::class);
         $command->setOutput($outputMock);
 
-        $outputMock->expects($this->once())->method('writeln')->with('<error>Hello world</error>');
+        $outputMock->expects($this->once())->method('error')->with('Hello world');
 
         $command->error('Hello world');
     }
@@ -290,12 +292,12 @@ final class CommandTest extends TestCase
     {
         $command = new Doubles\MyCommand();
         $command->setInput($this->createMock(InputInterface::class));
-        $outputMock = $this->createMock(OutputInterface::class);
+        $outputMock = $this->createMock(SymfonyStyle::class);
         $command->setOutput($outputMock);
 
-        $outputMock->expects($this->once())->method('writeln')->with('<comment>Hello world</comment>');
+        $outputMock->expects($this->once())->method('warning')->with('Hello world');
 
-        $command->warn('Hello world');
+        $command->warning('Hello world');
     }
 
     /** @test */
@@ -303,11 +305,248 @@ final class CommandTest extends TestCase
     {
         $command = new Doubles\MyCommand();
         $command->setInput($this->createMock(InputInterface::class));
-        $outputMock = $this->createMock(OutputInterface::class);
+        $outputMock = $this->createMock(SymfonyStyle::class);
         $command->setOutput($outputMock);
 
-        $outputMock->expects($this->once())->method('writeln')->with('<info>Hello world</info>');
+        $outputMock->expects($this->once())->method('success')->with('Hello world');
 
         $command->success('Hello world');
+    }
+
+    /** @test */
+    public function write_a_title(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('title')->with('Hello world');
+
+        $command->title('Hello world');
+    }
+
+    /** @test */
+    public function display_a_section(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('section')->with('Hello world');
+
+        $command->section('Hello world');
+    }
+
+    /** @test */
+    public function display_a_single_text_message(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('text')->with('Hello world');
+
+        $command->text('Hello world');
+    }
+
+    /** @test */
+    public function display_an_list_of_test_messages(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('text')->with(['Hello world', 'Hello world']);
+
+        $command->text(['Hello world', 'Hello world']);
+    }
+
+    /** @test */
+    public function display_un_ordered_list(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('listing')->with(['Hello world', 'Hello world']);
+
+        $command->listing(['Hello world', 'Hello world']);
+    }
+
+    /** @test */
+    public function display_a_table(): void
+    {
+        $headers = ['Header 1', 'Header 2'];
+        $rows = [
+            ['Cell 1-1', 'Cell 1-2'],
+            ['Cell 2-1', 'Cell 2-2'],
+            ['Cell 3-1', 'Cell 3-2'],
+        ];
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('table')->with($headers, $rows);
+
+        $command->table($headers, $rows);
+    }
+
+    /** @test */
+    public function display_horizontal_table(): void
+    {
+        $headers = ['Header 1', 'Header 2'];
+        $rows = [
+            ['Cell 1-1', 'Cell 1-2'],
+            ['Cell 2-1', 'Cell 2-2'],
+            ['Cell 3-1', 'Cell 3-2'],
+        ];
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('horizontalTable')->with($headers, $rows);
+
+        $command->horizontalTable($headers, $rows);
+    }
+
+    /** @test */
+    public function display_a_definition_list(): void
+    {
+        $list = [
+            'This is a title',
+            ['foo1' => 'bar1'],
+            ['foo2' => 'bar2'],
+            ['foo3' => 'bar3'],
+            new TableSeparator(),
+            'This is another title',
+            ['foo4' => 'bar4'],
+        ];
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('definitionList')->with($list);
+
+        $command->definitionList($list);
+    }
+
+    /** @test */
+    public function display_a_note(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('note')->with('Hello world');
+
+        $command->note('Hello world');
+    }
+
+    /** @test */
+    public function display_a_list_of_notes(): void
+    {
+        $notes = ['Hello world', 'Hello world'];
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('note')->with($notes);
+
+        $command->note($notes);
+    }
+
+    /** @test */
+    public function display_a_caution(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('caution')->with('Hello world');
+
+        $command->caution('Hello world');
+    }
+
+    /** @test */
+    public function display_a_list_of_cautions(): void
+    {
+        $cautions = ['Hello world', 'Hello world'];
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('caution')->with($cautions);
+
+        $command->caution($cautions);
+    }
+
+    /** @test */
+    public function ask_the_user_to_provide_a_value(): void
+    {
+        $question = 'What is your name?';
+        $default = 'John Doe';
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('ask')->with($question, $default)->willReturn($default);
+
+        $this->assertSame('John Doe', $command->ask($question, $default));
+    }
+
+    /** @test */
+    public function ask_the_user_for_sensitive_data(): void
+    {
+        $question = 'What is your password?';
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('askHidden')->with($question)->willReturn('secret');
+
+        $this->assertSame('secret', $command->askHidden($question));
+    }
+
+    /** @test */
+    public function ask_a_yes_or_no_question(): void
+    {
+        $question = 'Do you want to continue?';
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $output = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($output);
+
+        $output->expects($this->once())->method('confirm')->with($question)->willReturn(true);
+
+        $this->assertTrue($command->confirm($question));
+    }
+
+    /** @test */
+    public function ask_a_question_whose_answer_is_constrained_to_a_given_list(): void
+    {
+        $question = 'Select the queue to analyze';
+        $choices = ['queue1', 'queue2', 'queue3'];
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $output = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($output);
+
+        $output->expects($this->once())->method('choice')->with($question, $choices)->willReturn('queue1');
+
+        $this->assertSame('queue1', $command->choice($question, $choices));
     }
 }
