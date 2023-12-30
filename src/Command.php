@@ -4,15 +4,23 @@ declare(strict_types=1);
 
 namespace Symblaze\Console;
 
-use Illuminate\Console\Concerns\InteractsWithIO;
-use Illuminate\Console\OutputStyle;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 abstract class Command extends SymfonyCommand
 {
-    use InteractsWithIO;
+    protected InputInterface $input;
+    protected OutputInterface $output;
+
+    private const VERBOSITY_MAP = [
+        'v' => OutputInterface::VERBOSITY_VERBOSE,
+        'vv' => OutputInterface::VERBOSITY_VERY_VERBOSE,
+        'vvv' => OutputInterface::VERBOSITY_DEBUG,
+        'quiet' => OutputInterface::VERBOSITY_QUIET,
+        'normal' => OutputInterface::VERBOSITY_NORMAL,
+    ];
 
     protected function configure(): void
     {
@@ -26,7 +34,7 @@ abstract class Command extends SymfonyCommand
     public function run(InputInterface $input, OutputInterface $output): int
     {
         $this->input = $input;
-        $this->output = new OutputStyle($input, $output);
+        $this->output = new SymfonyStyle($input, $output);
 
         return parent::run($input, $output);
     }
@@ -34,7 +42,7 @@ abstract class Command extends SymfonyCommand
     /**
      * Determine if the given argument is present.
      */
-    public function hasArgument($name): bool
+    protected function hasArgument($name): bool
     {
         return $this->input->hasArgument($name) && ! is_null($this->argument($name));
     }
@@ -42,17 +50,17 @@ abstract class Command extends SymfonyCommand
     /**
      * Determine if the given option is present.
      */
-    public function hasOption($name): bool
+    protected function hasOption($name): bool
     {
         return $this->input->hasOption($name) && ! is_null($this->option($name));
     }
 
-    public function option(string $key): bool|array|string|null
+    protected function option(string $key): bool|array|string|null
     {
         return $this->input->getOption($key);
     }
 
-    public function options(): array
+    protected function options(): array
     {
         return $this->input->getOptions();
     }
@@ -60,7 +68,7 @@ abstract class Command extends SymfonyCommand
     /**
      * Get the value of a command argument.
      */
-    public function argument(string $key): bool|array|string|null
+    protected function argument(string $key): bool|array|string|null
     {
         return $this->input->getArgument($key);
     }
@@ -68,8 +76,57 @@ abstract class Command extends SymfonyCommand
     /**
      * Get all the arguments passed to the command.
      */
-    public function arguments(): array
+    protected function arguments(): array
     {
         return $this->input->getArguments();
+    }
+
+    /**
+     * Writes a message to the output and adds a newline at the end.
+     */
+    protected function line(string $message, ?string $style = null, string|int $verbosity = 'normal'): void
+    {
+        $styled = $style ? "<$style>$message</$style>" : $message;
+
+        $this->output->writeln($styled, $this->parseVerbosity($verbosity));
+    }
+
+    protected function info($string, string|int $verbosity = 'normal'): void
+    {
+        $this->line($string, 'info', $verbosity);
+    }
+
+    protected function comment($string, string|int $verbosity = 'normal'): void
+    {
+        $this->line($string, 'comment', $verbosity);
+    }
+
+    protected function question($string, string|int $verbosity = 'normal'): void
+    {
+        $this->line($string, 'question', $verbosity);
+    }
+
+    protected function error($string, string|int $verbosity = 'normal'): void
+    {
+        $this->line($string, 'error', $verbosity);
+    }
+
+    protected function warn($string, string|int $verbosity = 'normal'): void
+    {
+        $this->comment($string, $verbosity);
+    }
+
+    protected function success($string, string|int $verbosity = 'normal'): void
+    {
+        $this->info($string, $verbosity);
+    }
+
+    private function parseVerbosity(int|string $level): int
+    {
+        if (is_int($level)) {
+            return $level;
+        }
+
+        return self::VERBOSITY_MAP[$level] ?? OutputInterface::VERBOSITY_NORMAL;
     }
 }

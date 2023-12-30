@@ -142,3 +142,11 @@ if ($this->hasOption('queue')) {
     //...
 }
 ```
+
+## Writing output
+
+To send output to the console, you can use the `line`, `info`, `warn`, `error` and `success` methods:
+
+```php
+$this->line('This is a simple line');
+```

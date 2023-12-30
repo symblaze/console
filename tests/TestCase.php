@@ -13,6 +13,8 @@ use Symfony\Component\Console\Output\StreamOutput;
 
 class TestCase extends \PHPUnit\Framework\TestCase
 {
+    protected OutputInterface $output;
+
     protected function executeCommand(Command $command, array $input = [], array $options = []): int
     {
         $input = new ArrayInput($input);
@@ -24,7 +26,20 @@ class TestCase extends \PHPUnit\Framework\TestCase
 
         $options['decorated'] = $options['decorated'] ?? false;
 
-        return $command->run($input, $this->initOutput($options));
+        return $command->run($input, $this->output = $this->initOutput($options));
+    }
+
+    protected function getDisplay(bool $normalize = false): string
+    {
+        rewind($this->output->getStream());
+
+        $display = stream_get_contents($this->output->getStream());
+
+        if ($normalize) {
+            $display = str_replace(PHP_EOL, "\n", $display);
+        }
+
+        return $display;
     }
 
     private function createStream(array $inputs)

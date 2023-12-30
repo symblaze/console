@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Symblaze\Console\Tests;
 
-use Symblaze\Console\Command;
-use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -14,7 +12,7 @@ final class CommandTest extends TestCase
     /** @test */
     public function command_name(): void
     {
-        $command = new MyCommand();
+        $command = new Doubles\MyCommand();
 
         $this->assertSame('acme:command', $command->getName());
     }
@@ -22,7 +20,7 @@ final class CommandTest extends TestCase
     /** @test */
     public function it_parses_required_arguments(): void
     {
-        $command = new MyCommand();
+        $command = new Doubles\MyCommand();
 
         $this->assertTrue($command->getDefinition()->hasArgument('required_argument'));
         $this->assertTrue($command->getDefinition()->getArgument('required_argument')->isRequired());
@@ -31,7 +29,7 @@ final class CommandTest extends TestCase
     /** @test */
     public function it_parses_optional_arguments(): void
     {
-        $command = new MyCommand();
+        $command = new Doubles\MyCommand();
 
         $this->assertTrue($command->getDefinition()->hasArgument('optional_argument'));
         $this->assertFalse($command->getDefinition()->getArgument('optional_argument')->isRequired());
@@ -40,7 +38,7 @@ final class CommandTest extends TestCase
     /** @test */
     public function it_parses_optional_argument_with_default_value(): void
     {
-        $command = new MyCommand();
+        $command = new Doubles\MyCommand();
 
         $this->assertTrue($command->getDefinition()->hasArgument('argument_with_value'));
         $this->assertFalse($command->getDefinition()->getArgument('argument_with_value')->isRequired());
@@ -50,7 +48,7 @@ final class CommandTest extends TestCase
     /** @test */
     public function it_parses_options(): void
     {
-        $command = new MyCommand();
+        $command = new Doubles\MyCommand();
 
         $this->assertTrue($command->getDefinition()->hasOption('option'));
         $this->assertFalse($command->getDefinition()->getOption('option')->isValueRequired());
@@ -60,7 +58,7 @@ final class CommandTest extends TestCase
     /** @test */
     public function it_parses_option_that_requires_value(): void
     {
-        $command = new MyCommand();
+        $command = new Doubles\MyCommand();
 
         $this->assertTrue($command->getDefinition()->hasOption('option_with_value'));
         $this->assertFalse($command->getDefinition()->getOption('option_with_value')->isValueRequired());
@@ -70,7 +68,7 @@ final class CommandTest extends TestCase
     /** @test */
     public function it_parses_option_with_default_value(): void
     {
-        $command = new MyCommand();
+        $command = new Doubles\MyCommand();
 
         $this->assertTrue($command->getDefinition()->hasOption('option_with_default'));
         $this->assertFalse($command->getDefinition()->getOption('option_with_default')->isValueRequired());
@@ -80,7 +78,7 @@ final class CommandTest extends TestCase
     /** @test */
     public function it_parses_option_shortcut(): void
     {
-        $command = new MyCommand();
+        $command = new Doubles\MyCommand();
 
         $this->assertTrue($command->getDefinition()->hasOption('option'));
         $this->assertSame('O', $command->getDefinition()->getOption('option')->getShortcut());
@@ -91,7 +89,7 @@ final class CommandTest extends TestCase
     /** @test */
     public function it_parses_argument_arrays(): void
     {
-        $command = new CommandWithArrays();
+        $command = new Doubles\CommandWithArrays();
 
         $this->assertTrue($command->getDefinition()->hasArgument('argument_array'));
         $this->assertTrue($command->getDefinition()->getArgument('argument_array')->isArray());
@@ -100,7 +98,7 @@ final class CommandTest extends TestCase
     /** @test */
     public function it_parses_option_arrays(): void
     {
-        $command = new CommandWithArrays();
+        $command = new Doubles\CommandWithArrays();
 
         $this->assertTrue($command->getDefinition()->hasOption('option_array'));
         $this->assertTrue($command->getDefinition()->getOption('option_array')->isArray());
@@ -109,7 +107,7 @@ final class CommandTest extends TestCase
     /** @test */
     public function it_parses_argument_array_that_accepts_zero_or_more_items(): void
     {
-        $command = new CommandWithOptionalArgumentArray();
+        $command = new Doubles\CommandWithOptionalArgumentArray();
 
         $this->assertTrue($command->getDefinition()->hasArgument('optional_argument_list'));
         $this->assertTrue($command->getDefinition()->getArgument('optional_argument_list')->isArray());
@@ -118,7 +116,7 @@ final class CommandTest extends TestCase
     /** @test */
     public function it_parses_argument_description(): void
     {
-        $command = new CommandWithDescriptions();
+        $command = new Doubles\CommandWithDescriptions();
 
         $this->assertTrue($command->getDefinition()->hasArgument('argument'));
         $this->assertSame('Argument description', $command->getDefinition()->getArgument('argument')->getDescription());
@@ -127,7 +125,7 @@ final class CommandTest extends TestCase
     /** @test */
     public function it_parses_option_description(): void
     {
-        $command = new CommandWithDescriptions();
+        $command = new Doubles\CommandWithDescriptions();
 
         $this->assertTrue($command->getDefinition()->hasOption('option'));
         $this->assertSame('Option description', $command->getDefinition()->getOption('option')->getDescription());
@@ -136,7 +134,7 @@ final class CommandTest extends TestCase
     /** @test */
     public function determine_if_an_argument_is_present(): void
     {
-        $command = new MyCommand();
+        $command = new Doubles\MyCommand();
         $this->executeCommand($command, ['required_argument' => 'value']);
 
         $this->assertTrue($command->hasArgument('required_argument'));
@@ -146,7 +144,7 @@ final class CommandTest extends TestCase
     /** @test */
     public function get_value_of_an_argument(): void
     {
-        $command = new MyCommand();
+        $command = new Doubles\MyCommand();
         $this->executeCommand($command, ['required_argument' => 'value']);
 
         $this->assertSame('value', $command->argument('required_argument'));
@@ -157,7 +155,7 @@ final class CommandTest extends TestCase
     /** @test */
     public function get_all_arguments(): void
     {
-        $command = new MyCommand();
+        $command = new Doubles\MyCommand();
         $this->executeCommand($command, ['required_argument' => 'value']);
 
         $expected = ['required_argument' => 'value', 'optional_argument' => null, 'argument_with_value' => 'default'];
@@ -167,7 +165,7 @@ final class CommandTest extends TestCase
     /** @test */
     public function determine_if_an_option_is_present(): void
     {
-        $command = new MyCommand();
+        $command = new Doubles\MyCommand();
         $this->executeCommand($command, ['required_argument' => 'value', '--option' => true]);
 
         $this->assertTrue($command->hasOption('option'));
@@ -178,7 +176,7 @@ final class CommandTest extends TestCase
     /** @test */
     public function get_value_of_an_option(): void
     {
-        $command = new MyCommand();
+        $command = new Doubles\MyCommand();
         $this->executeCommand($command, ['required_argument' => 'value', '--option' => true]);
 
         $this->assertTrue($command->option('option'));
@@ -189,35 +187,127 @@ final class CommandTest extends TestCase
     /** @test */
     public function get_all_options(): void
     {
-        $command = new MyCommand();
+        $command = new Doubles\MyCommand();
         $this->executeCommand($command, ['required_argument' => 'value', '--option' => true]);
 
         $expected = ['option' => true, 'option_with_value' => null, 'option_with_default' => 'default'];
         $this->assertSame($expected, $command->options());
     }
-}
 
-#[AsCommand(name: 'acme:command {required_argument} {optional_argument?} {argument_with_value=default} {--O|option} {--OWV|option_with_value=} {--OWDV|option_with_default=default}')]
-class MyCommand extends Command
-{
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    /** @test */
+    public function write_message_with_line(): void
     {
-        return self::SUCCESS;
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(OutputInterface::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('writeln')->with('Hello world');
+
+        $command->line('Hello world');
     }
-}
 
-#[AsCommand(name: 'acme:array:command {argument_array*} {--option_array=*}')]
-class CommandWithArrays extends Command
-{
+    /** @test */
+    public function write_styled_message_with_line(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(OutputInterface::class);
+        $command->setOutput($outputMock);
 
-}
+        $outputMock->expects($this->once())->method('writeln')->with('<info>Hello world</info>');
 
-#[AsCommand(name: 'acme:optional:command {optional_argument_list?*}')]
-class CommandWithOptionalArgumentArray extends Command
-{
-}
+        $command->line('Hello world', 'info');
+    }
 
-#[AsCommand(name: 'acme:descriptions:command {argument : Argument description} {--O|option : Option description}')]
-class CommandWithDescriptions extends Command
-{
+    /** @test */
+    public function write_a_verbose_message_with_line(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(OutputInterface::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('writeln')->with('Hello world', OutputInterface::VERBOSITY_DEBUG);
+
+        $command->line('Hello world', null, 'vvv');
+    }
+
+    /** @test */
+    public function write_an_info_message(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(OutputInterface::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('writeln')->with('<info>Hello world</info>');
+
+        $command->info('Hello world');
+    }
+
+    /** @test */
+    public function write_a_comment_message(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(OutputInterface::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('writeln')->with('<comment>Hello world</comment>');
+
+        $command->comment('Hello world');
+    }
+
+    /** @test */
+    public function write_a_question(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(OutputInterface::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('writeln')->with('<question>Hello world</question>');
+
+        $command->question('Hello world');
+    }
+
+    /** @test */
+    public function write_an_error_message(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(OutputInterface::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('writeln')->with('<error>Hello world</error>');
+
+        $command->error('Hello world');
+    }
+
+    /** @test */
+    public function write_a_warn_message(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(OutputInterface::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('writeln')->with('<comment>Hello world</comment>');
+
+        $command->warn('Hello world');
+    }
+
+    /** @test */
+    public function write_a_success_message(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(OutputInterface::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('writeln')->with('<info>Hello world</info>');
+
+        $command->success('Hello world');
+    }
 }
