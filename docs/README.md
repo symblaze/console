@@ -1,5 +1,17 @@
 # Documentation
 
+- [Documentation](#documentation)
+    - [Creating a command](#creating-a-command)
+    - [Defining command Inputs](#defining-command-inputs)
+        - [Arguments](#arguments)
+        - [Options](#options)
+        - [Input arrays](#input-arrays)
+        - [Input descriptions](#input-descriptions)
+    - [Command Input Output](#command-input-output)
+        - [Retrieve input values](#retrieve-input-values)
+        - [Determine if an input is present](#determine-if-an-input-is-present)
+    - [Writing output](#writing-output)
+
 ## Creating a command
 
 To create a command, instead of extending the `Command` class from Symfony, you should extend the Symblaze console
