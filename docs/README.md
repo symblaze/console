@@ -145,8 +145,14 @@ if ($this->hasOption('queue')) {
 
 ## Writing output
 
-To send output to the console, you can use the `line`, `info`, `warn`, `error` and `success` methods:
+All helper methods from the Symfony `SymfonyStyle` class are available in the command class.
 
 ```php
-$this->line('This is a simple line');
+$this->title('Lorem ipsum dolor sit amet');
+$this->section('Adding a new user');
+$this->text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
+//And so on...
 ```
+
+You can find the full list of available methods in Symfony's
+documentation: [Helper methods](https://symfony.com/doc/current/console/style.html#helper-methods).
