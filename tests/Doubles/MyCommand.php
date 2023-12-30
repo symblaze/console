@@ -4,11 +4,27 @@ declare(strict_types=1);
 
 namespace Symblaze\Console\Tests\Doubles;
 
+use Illuminate\Console\OutputStyle;
 use Symblaze\Console\Command;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * @method hasArgument(string $name): bool
+ * @method argument(string $key): bool|array|string|null
+ * @method arguments(): array
+ * @method hasOption(string $name): bool
+ * @method option(string $key): bool|array|string|null
+ * @method options(): array
+ * @method line(string $message, ?string $style = null, string|int $verbosity = 'normal'): void
+ * @method info($string, string|int $verbosity = 'normal'): void
+ * @method comment($string, string|int $verbosity = 'normal'): void
+ * @method question($string, string|int $verbosity = 'normal'): void
+ * @method error($string, string|int $verbosity = 'normal'): void
+ * @method warn($string, string|int $verbosity = 'normal'): void
+ * @method success($string, string|int $verbosity = 'normal'): void
+ */
 #[AsCommand(name: 'acme:command {required_argument} {optional_argument?} {argument_with_value=default} {--O|option} {--OWV|option_with_value=} {--OWDV|option_with_default=default}')]
 class MyCommand extends Command
 {
@@ -17,50 +33,18 @@ class MyCommand extends Command
         return self::SUCCESS;
     }
 
-    /**
-     * Determine if the given argument is present.
-     */
-    public function hasArgument($name): bool
+    public function __call(string $name, array $arguments)
     {
-        return $this->input->hasArgument($name) && ! is_null($this->argument($name));
+        return parent::$name(...$arguments);
     }
 
-    /**
-     * Determine if the given option is present.
-     */
-    public function hasOption($name): bool
+    public function setOutput(OutputInterface $output): void
     {
-        return $this->input->hasOption($name) && ! is_null($this->option($name));
+        $this->output = new OutputStyle($this->input, $output);
     }
 
-    public function option(string $key): bool|array|string|null
+    public function setInput(InputInterface $input): void
     {
-        return $this->input->getOption($key);
-    }
-
-    public function options(): array
-    {
-        return $this->input->getOptions();
-    }
-
-    /**
-     * Get the value of a command argument.
-     */
-    public function argument(string $key): bool|array|string|null
-    {
-        return $this->input->getArgument($key);
-    }
-
-    /**
-     * Get all the arguments passed to the command.
-     */
-    public function arguments(): array
-    {
-        return $this->input->getArguments();
-    }
-
-    public function line(string $message, ?string $style = null, int|string $verbosity = 'normal'): void
-    {
-        parent::line($message, $style, $verbosity);
+        $this->input = $input;
     }
 }

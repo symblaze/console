@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Symblaze\Console\Tests;
 
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
 final class CommandTest extends TestCase
 {
     /** @test */
@@ -195,35 +198,116 @@ final class CommandTest extends TestCase
     public function write_message_with_line(): void
     {
         $command = new Doubles\MyCommand();
-        $this->executeCommand($command, ['required_argument' => 'value']);
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(OutputInterface::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('writeln')->with('Hello world');
 
         $command->line('Hello world');
-
-        $display = $this->getDisplay();
-        $this->assertSame('Hello world'.PHP_EOL, $display);
     }
 
     /** @test */
     public function write_styled_message_with_line(): void
     {
         $command = new Doubles\MyCommand();
-        $this->executeCommand($command, ['required_argument' => 'value']);
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(OutputInterface::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('writeln')->with('<info>Hello world</info>');
 
         $command->line('Hello world', 'info');
-
-        $display = $this->getDisplay();
-        $this->assertSame('Hello world'.PHP_EOL, $display);
     }
 
     /** @test */
-    public function write_verbose_message_with_line(): void
+    public function write_a_verbose_message_with_line(): void
     {
         $command = new Doubles\MyCommand();
-        $this->executeCommand($command, ['required_argument' => 'value']);
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(OutputInterface::class);
+        $command->setOutput($outputMock);
 
-        $command->line('Hello world', null, 'quite');
+        $outputMock->expects($this->once())->method('writeln')->with('Hello world', OutputInterface::VERBOSITY_DEBUG);
 
-        $display = $this->getDisplay();
-        $this->assertSame('Hello world'.PHP_EOL, $display);
+        $command->line('Hello world', null, 'vvv');
+    }
+
+    /** @test */
+    public function write_an_info_message(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(OutputInterface::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('writeln')->with('<info>Hello world</info>');
+
+        $command->info('Hello world');
+    }
+
+    /** @test */
+    public function write_a_comment_message(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(OutputInterface::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('writeln')->with('<comment>Hello world</comment>');
+
+        $command->comment('Hello world');
+    }
+
+    /** @test */
+    public function write_a_question(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(OutputInterface::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('writeln')->with('<question>Hello world</question>');
+
+        $command->question('Hello world');
+    }
+
+    /** @test */
+    public function write_an_error_message(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(OutputInterface::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('writeln')->with('<error>Hello world</error>');
+
+        $command->error('Hello world');
+    }
+
+    /** @test */
+    public function write_a_warn_message(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createMock(OutputInterface::class);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('writeln')->with('<comment>Hello world</comment>');
+
+        $command->warn('Hello world');
+    }
+
+    /** @test */
+    public function write_a_success_message(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $outputMock = $this->createPartialMock(OutputInterface::class, ['writeln']);
+        $command->setOutput($outputMock);
+
+        $outputMock->expects($this->once())->method('writeln')->with('<info>Hello world</info>');
+
+        $command->success('Hello world');
     }
 }

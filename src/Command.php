@@ -90,7 +90,37 @@ abstract class Command extends SymfonyCommand
 
         $this->output->writeln($styled, $this->parseVerbosity($verbosity));
     }
-    
+
+    protected function info($string, string|int $verbosity = 'normal'): void
+    {
+        $this->line($string, 'info', $verbosity);
+    }
+
+    protected function comment($string, string|int $verbosity = 'normal'): void
+    {
+        $this->line($string, 'comment', $verbosity);
+    }
+
+    protected function question($string, string|int $verbosity = 'normal'): void
+    {
+        $this->line($string, 'question', $verbosity);
+    }
+
+    protected function error($string, string|int $verbosity = 'normal'): void
+    {
+        $this->line($string, 'error', $verbosity);
+    }
+
+    protected function warn($string, string|int $verbosity = 'normal'): void
+    {
+        $this->comment($string, $verbosity);
+    }
+
+    protected function success($string, string|int $verbosity = 'normal'): void
+    {
+        $this->info($string, $verbosity);
+    }
+
     private function parseVerbosity(int|string $level): int
     {
         if (is_int($level)) {
