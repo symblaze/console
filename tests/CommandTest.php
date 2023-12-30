@@ -303,7 +303,7 @@ final class CommandTest extends TestCase
     {
         $command = new Doubles\MyCommand();
         $command->setInput($this->createMock(InputInterface::class));
-        $outputMock = $this->createPartialMock(OutputInterface::class, ['writeln']);
+        $outputMock = $this->createMock(OutputInterface::class);
         $command->setOutput($outputMock);
 
         $outputMock->expects($this->once())->method('writeln')->with('<info>Hello world</info>');

@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Symblaze\Console;
 
-use Illuminate\Console\Concerns\InteractsWithIO;
-use Illuminate\Console\OutputStyle;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 abstract class Command extends SymfonyCommand
 {
-    use InteractsWithIO;
+    protected InputInterface $input;
+    protected OutputInterface $output;
 
     private const VERBOSITY_MAP = [
         'v' => OutputInterface::VERBOSITY_VERBOSE,
@@ -34,7 +34,7 @@ abstract class Command extends SymfonyCommand
     public function run(InputInterface $input, OutputInterface $output): int
     {
         $this->input = $input;
-        $this->output = new OutputStyle($input, $output);
+        $this->output = new SymfonyStyle($input, $output);
 
         return parent::run($input, $output);
     }
@@ -127,6 +127,6 @@ abstract class Command extends SymfonyCommand
             return $level;
         }
 
-        return self::VERBOSITY_MAP[$level] ?? $this->verbosity;
+        return self::VERBOSITY_MAP[$level] ?? OutputInterface::VERBOSITY_NORMAL;
     }
 }

@@ -40,7 +40,7 @@ class MyCommand extends Command
 
     public function setOutput(OutputInterface $output): void
     {
-        $this->output = new OutputStyle($this->input, $output);
+        $this->output = $output;
     }
 
     public function setInput(InputInterface $input): void

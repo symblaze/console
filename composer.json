@@ -9,7 +9,6 @@
         }
     ],
     "require": {
-        "illuminate/console": "^10.38",
         "symfony/console": "*"
     }
     ,
