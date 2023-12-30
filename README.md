@@ -8,6 +8,21 @@ that you want to implement.
 Symblaze Console is a library that allows you to configure your console commands using the Symfony `AsCommand`
 attribute. It's inspired by the Laravel Artisan console, and it's built on top of the Symfony console component.
 
+## Before
+
+![Before](docs/before.png)
+
+- Multiple lines of code for each command.
+- Multiple imports that doesn't belong to the business logic.
+- A Configuration method that doesn't belong to the business logic.
+
+## After
+
+![After](docs/after.png)
+
+- A single line of code for each command.
+- Focus on the business logic.
+
 ## Installation
 
 ```bash
