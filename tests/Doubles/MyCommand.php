@@ -38,6 +38,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  * @method askHidden(string $question, callable $validator = null): mixed
  * @method confirm(string $question, bool $default = true): bool
  * @method choice(string $question, array $choices, mixed $default = null, bool $multiSelect = false): mixed
+ * @method progressStart(int $max = 0): void
+ * @method progressAdvance(int $step = 1): void
+ * @method progressFinish(): void
+ * @method createProgressBar(int $max = 0): ProgressBar
  */
 #[AsCommand(name: 'acme:command {required_argument} {optional_argument?} {argument_with_value=default} {--O|option} {--OWV|option_with_value=} {--OWDV|option_with_default=default}')]
 class MyCommand extends Command

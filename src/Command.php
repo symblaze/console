@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Symblaze\Console;
 
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -185,6 +186,26 @@ abstract class Command extends SymfonyCommand
     protected function choice(string $question, array $choices, mixed $default = null, bool $multiSelect = false): mixed
     {
         return $this->output->choice($question, $choices, $default, $multiSelect);
+    }
+
+    protected function progressStart(int $max = 0): void
+    {
+        $this->output->progressStart($max);
+    }
+
+    protected function progressAdvance(int $step = 1): void
+    {
+        $this->output->progressAdvance($step);
+    }
+
+    protected function progressFinish(): void
+    {
+        $this->output->progressFinish();
+    }
+
+    protected function createProgressBar(int $max = 0): ProgressBar
+    {
+        return $this->output->createProgressBar($max);
     }
 
     private function parseVerbosity(int|string $level): int
