@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Symblaze\Console\Tests;
 
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -548,5 +549,57 @@ final class CommandTest extends TestCase
         $output->expects($this->once())->method('choice')->with($question, $choices)->willReturn('queue1');
 
         $this->assertSame('queue1', $command->choice($question, $choices));
+    }
+
+    /** @test */
+    public function progress_bar_start(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $output = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($output);
+
+        $output->expects($this->once())->method('progressStart')->with(10);
+
+        $command->progressStart(10);
+    }
+
+    /** @test */
+    public function progress_advance(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $output = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($output);
+
+        $output->expects($this->once())->method('progressAdvance')->with(10);
+
+        $command->progressAdvance(10);
+    }
+
+    /** @test */
+    public function progress_finish(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $output = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($output);
+
+        $output->expects($this->once())->method('progressFinish');
+
+        $command->progressFinish();
+    }
+
+    /** @test */
+    public function create_progress_bar(): void
+    {
+        $command = new Doubles\MyCommand();
+        $command->setInput($this->createMock(InputInterface::class));
+        $output = $this->createMock(SymfonyStyle::class);
+        $command->setOutput($output);
+
+        $output->expects($this->once())->method('createProgressBar')->with(10)->willReturn(new ProgressBar($output));
+
+        $command->createProgressBar(10);
     }
 }
