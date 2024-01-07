@@ -11,6 +11,7 @@ final class ParserTest extends TestCase
 {
     /**
      * @test
+     *
      * @dataProvider commandNameProvider
      */
     public function it_parses_command_name(string $name, string $expectedName): void
@@ -152,7 +153,7 @@ final class ParserTest extends TestCase
             'option that has default value' => ['acme:command {--option=default}', 'acme:command'],
             'argument and option' => ['acme:command {argument} {--option}', 'acme:command'],
             'optional argument and option' => ['acme:command {argument?} {--option}', 'acme:command'],
-            'argument with default value and option' => ['acme:command {argument=default} {--option}', 'acme:command',],
+            'argument with default value and option' => ['acme:command {argument=default} {--option}', 'acme:command'],
             'argument array' => ['acme:command {argument*}', 'acme:command'],
             'options array' => ['acme:command {--option=*}', 'acme:command'],
             'argument that has description' => ['acme:command {argument : Description}', 'acme:command'],
