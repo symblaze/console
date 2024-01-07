@@ -1,29 +1,34 @@
 {
-    "name": "symblaze/console",
-    "description": "Fluent configuration for Symfony console",
-    "license": "MIT",
-    "authors": [
-        {
-            "name": "imdhemy",
-            "email": "imdhemy@gmail.com"
-        }
-    ],
-    "require": {
-        "symfony/console": "*"
+  "name": "symblaze/console",
+  "description": "Fluent configuration for Symfony console",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "imdhemy",
+      "email": "imdhemy@gmail.com"
     }
-    ,
-    "require-dev": {
-        "roave/security-advisories": "dev-latest",
-        "phpunit/phpunit": "^10.5"
-    },
-    "autoload": {
-        "psr-4": {
-            "Symblaze\\Console\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Symblaze\\Console\\Tests\\": "tests/"
-        }
+  ],
+  "require": {
+    "symfony/console": "*"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-latest",
+    "phpunit/phpunit": "^10.5",
+    "friendsofphp/php-cs-fixer": "^3.46"
+  },
+  "autoload": {
+    "psr-4": {
+      "Symblaze\\Console\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Symblaze\\Console\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "./vendor/bin/phpunit --testdox",
+    "cs-check": "vendor/bin/php-cs-fixer fix --dry-run --diff --verbose",
+    "cs-fix": "php-cs-fixer fix --verbose"
+  }
 }

@@ -2,3 +2,4 @@
 /.idea/
 /.phpunit.result.cache
 .phpunit.cache/test-results
+.php-cs-fixer.cache

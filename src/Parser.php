@@ -95,7 +95,6 @@ final class Parser
         return new InputArgument($token, InputArgument::REQUIRED, $description);
     }
 
-
     /**
      * Parse an option expression.
      */
@@ -141,7 +140,6 @@ final class Parser
         return new InputOption($token, $shortcut, InputOption::VALUE_NONE, $description);
     }
 
-
     /**
      * Parse the token into its token and description segments.
      */
@@ -149,6 +147,6 @@ final class Parser
     {
         $parts = preg_split('/\s+:\s+/', trim($token), 2);
 
-        return count($parts) === 2 ? $parts : [$token, ''];
+        return 2 === count($parts) ? $parts : [$token, ''];
     }
 }

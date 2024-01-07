@@ -86,7 +86,7 @@ abstract class Command extends SymfonyCommand
     /**
      * Writes a message to the output and adds a newline at the end.
      */
-    protected function line(string $message, ?string $style = null, string|int $verbosity = 'normal'): void
+    protected function line(string $message, string $style = null, string|int $verbosity = 'normal'): void
     {
         $styled = $style ? "<$style>$message</$style>" : $message;
 
