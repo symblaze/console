@@ -1,7 +1,17 @@
 # Symblaze Console
 
 <div align="center">
+
 <img alt="Packagist PHP Version Support" src="https://img.shields.io/packagist/php-v/symblaze/console">
+
+<a href="https://packagist.org/packages/imdhemy/laravel-purchases">
+    <img src="https://img.shields.io/packagist/v/symblaze/console.svg?style=flat-square" alt="Latest Version on Packagist">
+</a>
+
+<a href="https://packagist.org/packages/imdhemy/laravel-purchases/stats">
+    <img src="https://img.shields.io/packagist/dt/symblaze/console.svg?style=flat-square" alt="Total Downloads">
+</a>
+
 </div>
 
 Symfony provides a robust console system that simplifies the development of command line interfaces.
