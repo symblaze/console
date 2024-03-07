@@ -9,6 +9,7 @@
     }
   ],
   "require": {
+    "php": ">=8.1",
     "symfony/console": "*"
   },
   "require-dev": {
@@ -30,5 +31,10 @@
     "test": "./vendor/bin/phpunit --testdox",
     "cs-check": "vendor/bin/php-cs-fixer fix --dry-run --diff --verbose",
     "cs-fix": "php-cs-fixer fix --verbose"
+  },
+  "config": {
+    "platform": {
+      "php": "8.1"
+    }
   }
 }

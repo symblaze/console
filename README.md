@@ -1,5 +1,9 @@
 # Symblaze Console
 
+<div align="center">
+<img alt="Packagist PHP Version Support" src="https://img.shields.io/packagist/php-v/symblaze/console">
+</div>
+
 Symfony provides a robust console system that simplifies the development of command line interfaces.
 However, setting up the console command parameters and options can be somewhat tedious and repetitive.
 
