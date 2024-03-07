@@ -1,28 +1,15 @@
 # Symblaze Console
 
-Symfony comes with a powerful console framework that eases the creation of command line interfaces, however,
-configuring the console command options and arguments can be a bit tedious, especially because you have to write
-multiple lines of code for each command you want to create, and that configuration is not part of the business logic
-that you want to implement.
+Symfony provides a robust console system that simplifies the development of command line interfaces.
+However, setting up the console command parameters and options can be somewhat tedious and repetitive.
 
 Symblaze Console is a library that allows you to configure your console commands using the Symfony `AsCommand`
-attribute. It's inspired by the Laravel Artisan console, and it's built on top of the Symfony console component.
+attribute with a fluent interface.
 
-## ❌ Before 😝
-
-![Before](docs/before.png)
-
-- Multiple lines of code for each command.
-- Multiple imports that doesn't belong to the business logic.
-- A Configuration method that doesn't belong to the business logic.
-
-## ✅ After 💅
-
-![After](docs/after.png)
+![Symblaze Console screenshot](docs/screenshot.png)
 
 - A single line of code for each command.
 - No configuration method.
-- Focus on the business logic.
 
 ## Installation
 
