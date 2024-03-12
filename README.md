@@ -4,11 +4,11 @@
 
 <img alt="Packagist PHP Version Support" src="https://img.shields.io/packagist/php-v/symblaze/console">
 
-<a href="https://packagist.org/packages/imdhemy/laravel-purchases">
+<a href="https://packagist.org/packages/symblaze/console">
     <img src="https://img.shields.io/packagist/v/symblaze/console.svg?style=flat-square" alt="Latest Version on Packagist">
 </a>
 
-<a href="https://packagist.org/packages/imdhemy/laravel-purchases/stats">
+<a href="https://packagist.org/packages/symblaze/console/stats">
     <img src="https://img.shields.io/packagist/dt/symblaze/console.svg?style=flat-square" alt="Total Downloads">
 </a>
 
