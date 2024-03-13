@@ -36,7 +36,7 @@ abstract class Command extends SymfonyCommand
     public function run(InputInterface $input, OutputInterface $output): int
     {
         $this->input = $input;
-        $this->output = new SymfonyStyle($input, $output);
+        $this->output = StyleFactory::create($input, $output);
 
         return parent::run($input, $output);
     }
@@ -86,7 +86,7 @@ abstract class Command extends SymfonyCommand
     /**
      * Writes a message to the output and adds a newline at the end.
      */
-    protected function line(string $message, string $style = null, string|int $verbosity = 'normal'): void
+    protected function line(string $message, ?string $style = null, string|int $verbosity = 'normal'): void
     {
         $styled = $style ? "<$style>$message</$style>" : $message;
 
@@ -168,12 +168,12 @@ abstract class Command extends SymfonyCommand
         $this->output->caution($message);
     }
 
-    protected function ask(string $question, string $default = null, callable $validator = null): mixed
+    protected function ask(string $question, ?string $default = null, ?callable $validator = null): mixed
     {
         return $this->output->ask($question, $default, $validator);
     }
 
-    protected function askHidden(string $question, callable $validator = null): mixed
+    protected function askHidden(string $question, ?callable $validator = null): mixed
     {
         return $this->output->askHidden($question, $validator);
     }
