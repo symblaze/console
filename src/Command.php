@@ -12,7 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
- * @psalm-api - This file is part of the symblaze/console package.
+ * @psalm-api      - This file is part of the symblaze/console package.
+ *
+ * @psalm-suppress PropertyNotSetInConstructor - The properties are set in the run method.
  */
 abstract class Command extends SymfonyCommand
 {
