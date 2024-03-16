@@ -15,7 +15,8 @@
   "require-dev": {
     "roave/security-advisories": "dev-latest",
     "phpunit/phpunit": "^10.5",
-    "friendsofphp/php-cs-fixer": "^3.46"
+    "friendsofphp/php-cs-fixer": "^3.46",
+    "vimeo/psalm": "^5.23"
   },
   "autoload": {
     "psr-4": {
@@ -30,7 +31,8 @@
   "scripts": {
     "test": "./vendor/bin/phpunit --testdox",
     "cs-check": "vendor/bin/php-cs-fixer fix --dry-run --diff --verbose",
-    "cs-fix": "php-cs-fixer fix --verbose"
+    "cs-fix": "php-cs-fixer fix --verbose",
+    "psalm": "psalm --no-cache"
   },
   "config": {
     "platform": {
