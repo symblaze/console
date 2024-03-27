@@ -51,7 +51,7 @@ trait OutputTrait
     {
         $styled = $style ? "<$style>$message</$style>" : $message;
 
-        $this->output->line($styled);
+        $this->output->writeln($styled);
     }
 
     protected function note(string|array $message): void

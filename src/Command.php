@@ -37,7 +37,7 @@ abstract class Command extends SymfonyCommand
     public function run(InputInterface $input, OutputInterface $output): int
     {
         $this->setInput($input);
-        $this->setOutput(new Output(StyleFactory::create($input, $output)));
+        $this->setOutput(new Output($input, StyleFactory::create($input, $output)));
 
         return parent::run($input, $output);
     }
