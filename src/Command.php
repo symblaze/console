@@ -25,22 +25,6 @@ abstract class Command extends SymfonyCommand
     protected InputInterface|IO\InputInterface $input;
     protected IO\OutputInterface $output;
 
-    public function __construct(
-        ?string $name = null,
-        ?IO\InputInterface $input = null,
-        ?IO\OutputInterface $output = null
-    ) {
-        parent::__construct($name);
-
-        if (! is_null($input)) {
-            $this->input = $input;
-        }
-
-        if (! is_null($output)) {
-            $this->output = $output;
-        }
-    }
-
     protected function configure(): void
     {
         [$name, $arguments, $options] = Parser::parse(static::getDefaultName());
@@ -50,14 +34,11 @@ abstract class Command extends SymfonyCommand
         $this->getDefinition()->addOptions($options);
     }
 
-    /**
-     * @psalm-suppress RedundantPropertyInitializationCheck - The $input and $output are optional in the constructor.
-     */
     public function run(InputInterface $input, OutputInterface $output): int
     {
         $this->input = $input;
 
-        $this->output = $this->output ?? new Output(StyleFactory::create($input, $output));
+        $this->output = new Output(StyleFactory::create($input, $output));
 
         return parent::run($input, $output);
     }
