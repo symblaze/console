@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symblaze\Console\IO;
+namespace Symblaze\Console\Output;
 
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\TableSeparator;

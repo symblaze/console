@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Symblaze\Console\Tests;
 
 use PHPUnit\Framework\Attributes\Test;
-use Symblaze\Console\IO\Output;
+use Symblaze\Console\Output\Output;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
