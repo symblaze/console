@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symblaze\Console;
+namespace Symblaze\Console\IO\Style;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
