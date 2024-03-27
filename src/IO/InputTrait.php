@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symblaze\Console\Input;
+namespace Symblaze\Console\IO;
 
 /**
  * A collection of methods to interact with the input.

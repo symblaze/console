@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Symblaze\Console\Output;
+namespace Symblaze\Console\IO;
 
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\TableSeparator;
@@ -13,7 +13,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  *
  * @internal - This class is for internal use only
  */
-class Output implements OutputInterface
+class Output
 {
     public function __construct(private readonly SymfonyStyle $style)
     {

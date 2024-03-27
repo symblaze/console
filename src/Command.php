@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Symblaze\Console;
 
-use Symblaze\Console\Input\InputTrait;
-use Symblaze\Console\Output\Output;
-use Symblaze\Console\Output\OutputTrait;
-use Symblaze\Console\Output\Style\StyleFactory;
+use Symblaze\Console\IO\InputTrait;
+use Symblaze\Console\IO\Output;
+use Symblaze\Console\IO\OutputTrait;
+use Symblaze\Console\IO\Style\StyleFactory;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,8 +22,8 @@ abstract class Command extends SymfonyCommand
     use InputTrait;
     use OutputTrait;
 
-    protected InputInterface|Input\InputInterface $input;
-    protected \Symblaze\Console\Output\OutputInterface $output;
+    protected InputInterface $input;
+    protected Output $output;
 
     protected function configure(): void
     {
@@ -42,24 +42,24 @@ abstract class Command extends SymfonyCommand
         return parent::run($input, $output);
     }
 
-    public function getInput(): Input\InputInterface|InputInterface
+    public function getInput(): InputInterface
     {
         return $this->input;
     }
 
-    public function setInput(Input\InputInterface|InputInterface $input): static
+    public function setInput(InputInterface $input): static
     {
         $this->input = $input;
 
         return $this;
     }
 
-    public function getOutput(): \Symblaze\Console\Output\OutputInterface
+    public function getOutput(): Output
     {
         return $this->output;
     }
 
-    public function setOutput(\Symblaze\Console\Output\OutputInterface $output): static
+    public function setOutput(Output $output): static
     {
         $this->output = $output;
 
