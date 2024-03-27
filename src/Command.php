@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Symblaze\Console;
 
-use Symblaze\Console\IO\InputTrait;
+use Symblaze\Console\IO\Helper\InputTrait;
+use Symblaze\Console\IO\Helper\OutputTrait;
 use Symblaze\Console\IO\Output;
-use Symblaze\Console\IO\OutputTrait;
 use Symblaze\Console\IO\Style\StyleFactory;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputInterface;
