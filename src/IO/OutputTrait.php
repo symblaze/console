@@ -6,7 +6,6 @@ namespace Symblaze\Console\IO;
 
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\TableSeparator;
-use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * A collection of methods to interact with the output.
@@ -48,11 +47,11 @@ trait OutputTrait
     /**
      * Writes a message to the output and adds a newline at the end.
      */
-    protected function line(string $message, ?string $style = null, string|int $verbosity = 'normal'): void
+    protected function line(string $message, ?string $style = null): void
     {
         $styled = $style ? "<$style>$message</$style>" : $message;
 
-        $this->output->writeln($styled, $this->parseVerbosity($verbosity));
+        $this->output->line($styled);
     }
 
     protected function note(string|array $message): void
@@ -138,22 +137,5 @@ trait OutputTrait
     protected function ask(string $question, ?string $default = null, ?callable $validator = null): mixed
     {
         return $this->output->ask($question, $default, $validator);
-    }
-
-    private function parseVerbosity(int|string $level): int
-    {
-        if (is_int($level)) {
-            return $level;
-        }
-
-        $verbosityMap = [
-            'v' => OutputInterface::VERBOSITY_VERBOSE,
-            'vv' => OutputInterface::VERBOSITY_VERY_VERBOSE,
-            'vvv' => OutputInterface::VERBOSITY_DEBUG,
-            'quiet' => OutputInterface::VERBOSITY_QUIET,
-            'normal' => OutputInterface::VERBOSITY_NORMAL,
-        ];
-
-        return $verbosityMap[$level] ?? OutputInterface::VERBOSITY_NORMAL;
     }
 }

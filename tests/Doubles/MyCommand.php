@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Symblaze\Console\Tests\Doubles;
 
 use Symblaze\Console\Command;
+use Symblaze\Console\IO\Output;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
@@ -58,7 +59,7 @@ class MyCommand extends Command
 
     public function setOutput(SymfonyStyle $output): void
     {
-        $this->output = $output;
+        $this->output = new Output($output);
     }
 
     public function setInput(InputInterface $input): void

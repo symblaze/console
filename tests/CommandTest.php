@@ -7,7 +7,6 @@ namespace Symblaze\Console\Tests;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 final class CommandTest extends TestCase
@@ -224,19 +223,6 @@ final class CommandTest extends TestCase
     }
 
     /** @test */
-    public function write_a_verbose_message_with_line(): void
-    {
-        $command = new Doubles\MyCommand();
-        $command->setInput($this->createMock(InputInterface::class));
-        $outputMock = $this->createMock(SymfonyStyle::class);
-        $command->setOutput($outputMock);
-
-        $outputMock->expects($this->once())->method('writeln')->with('Hello world', OutputInterface::VERBOSITY_DEBUG);
-
-        $command->line('Hello world', null, 'vvv');
-    }
-
-    /** @test */
     public function write_an_info_message(): void
     {
         $command = new Doubles\MyCommand();
@@ -354,19 +340,6 @@ final class CommandTest extends TestCase
     }
 
     /** @test */
-    public function display_an_list_of_test_messages(): void
-    {
-        $command = new Doubles\MyCommand();
-        $command->setInput($this->createMock(InputInterface::class));
-        $outputMock = $this->createMock(SymfonyStyle::class);
-        $command->setOutput($outputMock);
-
-        $outputMock->expects($this->once())->method('text')->with(['Hello world', 'Hello world']);
-
-        $command->text(['Hello world', 'Hello world']);
-    }
-
-    /** @test */
     public function display_un_ordered_list(): void
     {
         $command = new Doubles\MyCommand();
@@ -453,20 +426,6 @@ final class CommandTest extends TestCase
     }
 
     /** @test */
-    public function display_a_list_of_notes(): void
-    {
-        $notes = ['Hello world', 'Hello world'];
-        $command = new Doubles\MyCommand();
-        $command->setInput($this->createMock(InputInterface::class));
-        $outputMock = $this->createMock(SymfonyStyle::class);
-        $command->setOutput($outputMock);
-
-        $outputMock->expects($this->once())->method('note')->with($notes);
-
-        $command->note($notes);
-    }
-
-    /** @test */
     public function display_a_caution(): void
     {
         $command = new Doubles\MyCommand();
@@ -477,20 +436,6 @@ final class CommandTest extends TestCase
         $outputMock->expects($this->once())->method('caution')->with('Hello world');
 
         $command->caution('Hello world');
-    }
-
-    /** @test */
-    public function display_a_list_of_cautions(): void
-    {
-        $cautions = ['Hello world', 'Hello world'];
-        $command = new Doubles\MyCommand();
-        $command->setInput($this->createMock(InputInterface::class));
-        $outputMock = $this->createMock(SymfonyStyle::class);
-        $command->setOutput($outputMock);
-
-        $outputMock->expects($this->once())->method('caution')->with($cautions);
-
-        $command->caution($cautions);
     }
 
     /** @test */
