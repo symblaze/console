@@ -1,73 +1,36 @@
-name: "Continuous Integration"
-
-on:
-  pull_request:
-  push:
-
+name: CI
+on: [ push, pull_request ]
 jobs:
-  phpunit:
-    name: "Unit Tests"
-    runs-on: ubuntu-latest
+  ci:
+    name: "CI"
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      matrix:
+        operating-system: [ ubuntu-latest, windows-latest, macos-latest ]
+        php-version: [ 8.3 ]
     steps:
+
+      # --------- Setup steps ---------
       - name: "Checkout"
         uses: actions/checkout@v3
 
-      - name: "Install PHP"
+      - name: "Setup PHP"
         uses: shivammathur/setup-php@v2
         with:
           coverage: "pcov"
-          php-version: "8.1"
+          php-version: "${{ matrix.php-version }}"
           ini-values: memory_limit=-1
-          extensions: sodium, fileinfo, redis
+          extensions: pcov, xdebug
 
       - name: "Install dependencies"
         uses: ramsey/composer-install@v2
-        with:
-          dependency-versions: "locked"
 
-      - name: "Run PHPUnit"
-        run: composer test
+      # --------- Run steps ---------
+      - name: "Unit Tests"
+        run: "composer test"
 
-  psalm:
-    name: "Static Analysis"
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Checkout"
-        uses: actions/checkout@v3
+      - name: "Coding Style"
+        run: "composer cs-fix"
 
-      - name: "Install PHP"
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.1"
-          ini-values: memory_limit=-1
-          extensions: sodium, fileinfo, redis
-
-      - name: "Install dependencies"
-        uses: ramsey/composer-install@v2
-        with:
-          dependency-versions: "locked"
-
-      - name: "Run Psalm"
-        run: composer psalm
-
-  phpcs:
-    name: "Code Style"
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Checkout"
-        uses: actions/checkout@v3
-
-      - name: "Install PHP"
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.1"
-          ini-values: memory_limit=-1
-          extensions: sodium, fileinfo, redis
-
-      - name: "Install dependencies"
-        uses: ramsey/composer-install@v2
-        with:
-          dependency-versions: "locked"
-
-      - name: "Run PHPCS"
-        run: composer cs-check
+      - name: "Static code analysis"
+        run: "composer psalm"
