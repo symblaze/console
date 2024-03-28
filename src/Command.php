@@ -7,7 +7,6 @@ namespace Symblaze\Console;
 use Symblaze\Console\IO\Helper\InputTrait;
 use Symblaze\Console\IO\Helper\OutputTrait;
 use Symblaze\Console\IO\Output;
-use Symblaze\Console\IO\Style\StyleFactory;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -37,7 +36,7 @@ abstract class Command extends SymfonyCommand
     public function run(InputInterface $input, OutputInterface $output): int
     {
         $this->setInput($input);
-        $this->setOutput(new Output($input, StyleFactory::create($input, $output)));
+        $this->setOutput(new Output($input, $output));
 
         return parent::run($input, $output);
     }
