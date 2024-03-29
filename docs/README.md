@@ -157,14 +157,15 @@ if ($this->hasOption('queue')) {
 
 ## Writing output
 
-All helper methods from the Symfony `SymfonyStyle` class are available in the command class.
+The package provides a handy Console style that you can use to write output to the console:
+<img alt="Output style" height="200" src="./output-style.png"/>
 
 ```php
-$this->title('Lorem ipsum dolor sit amet');
-$this->section('Adding a new user');
-$this->text('Lorem ipsum dolor sit amet, consectetur adipiscing elit.');
-//And so on...
+$this->output->comment('This is a comment');
+$this->output->success('This is a success message');
+$this->output->error('This is an error message');
+$this->output->warning('This is an info message');
+$this->output->note('This is an info message');
+$this->output->info('This is an info message');
+$this->output->caution('This is a line message');
 ```
-
-You can find the full list of available methods in Symfony's
-documentation: [Helper methods](https://symfony.com/doc/current/console/style.html#helper-methods).
