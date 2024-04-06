@@ -30,7 +30,9 @@ jobs:
         run: "composer test"
 
       - name: "Coding Style"
-        run: "composer cs-fix"
+        run: "composer cs-check"
+        if: matrix.operating-system == 'ubuntu-latest'
 
       - name: "Static code analysis"
         run: "composer psalm"
+        if: matrix.operating-system == 'ubuntu-latest'
