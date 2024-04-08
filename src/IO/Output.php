@@ -100,6 +100,24 @@ class Output extends SymfonyStyle
         $this->newLine();
     }
 
+    public function title(string|array $message): void
+    {
+        $this->write(sprintf('<fg=default;bg=default;options=underscore> %s </>', $message));
+        $this->newLine();
+    }
+
+    public function labeledTitle(
+        string $label,
+        string $title,
+        string $labelStyle = 'fg=white;bg=green;options=bold',
+        string $labelPrefix = '➜ ',
+        string $labelSeparator = ' ',
+    ): void {
+        $this->write(sprintf('<%s>%s%s%s</>', $labelStyle, $labelPrefix, $label, $labelSeparator));
+        $this->write($title);
+        $this->newLine();
+    }
+
     private function autoPrependText(): void
     {
         $fetched = $this->bufferedOutput->fetch();
