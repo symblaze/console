@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Symblaze\Console;
 
-use Symblaze\Console\IO\Helper\InputTrait;
-use Symblaze\Console\IO\Helper\OutputTrait;
+use RuntimeException;
+use Symblaze\Console\IO\IOTrait;
 use Symblaze\Console\IO\Output;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,8 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 abstract class Command extends SymfonyCommand
 {
-    use InputTrait;
-    use OutputTrait;
+    use IOTrait;
 
     protected InputInterface $input;
     protected Output $output;
@@ -40,6 +39,20 @@ abstract class Command extends SymfonyCommand
         $this->setOutput($output);
 
         return parent::run($input, $output);
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output): int
+    {
+        if (method_exists($this, 'handle')) {
+            $result = $this->handle();
+            assert(is_int($result), 'The handle method must return an integer.');
+
+            return $result;
+        }
+
+        throw new RuntimeException(
+            'Either the `handle()` method must be implemented or the `execute()` method must be overridden.'
+        );
     }
 
     public function getInput(): InputInterface

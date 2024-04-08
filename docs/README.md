@@ -31,6 +31,22 @@ class SendEmailCommand extends Command
 }
 ```
 
+You can also replace the `execute()` method with a `handle()` method:
+
+```php
+use Symblaze\Console\Command;
+use Symfony\Component\Console\Attribute\AsCommand;
+
+ #[ASCommand(name: 'send:email', description: 'Send a marketing email to a user')]
+class SendEmailCommand extends Command
+{
+    public function handle(): int
+    {
+        //...
+    }
+}
+```
+
 ## Defining command Inputs
 
 No need to override the `configure` method to define the command arguments. All you need to do is to add the
@@ -168,4 +184,5 @@ $this->output->warning('This is an info message');
 $this->output->note('This is an info message');
 $this->output->info('This is an info message');
 $this->output->caution('This is a line message');
+$this->output->question('This is a question message');
 ```
