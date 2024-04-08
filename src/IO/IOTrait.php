@@ -2,15 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Symblaze\Console\IO\Helper;
+namespace Symblaze\Console\IO;
 
 /**
- * A collection of methods to interact with the input.
+ * @mixin Output
  *
  * @internal
  */
-trait InputTrait
+trait IOTrait
 {
+    public function __call(string $name, array $arguments): mixed
+    {
+        if (method_exists($this->output, $name)) {
+            trigger_deprecation(
+                'symblaze/console',
+                '1.2.0',
+                sprintf('The method "%s" is deprecated, use the output method directly.', $name)
+            );
+        }
+
+        return $this->output->$name(...$arguments);
+    }
+
     /**
      * Get the value of a command argument.
      */

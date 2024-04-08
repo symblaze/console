@@ -13,7 +13,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * The Symblaze output helper class.
  *
- * @internal - This class is for internal use only
+ * @internal  - This class is for internal use only
+ *
+ * @psalm-api - Provides a custom output helper for the console.
  */
 class Output extends SymfonyStyle
 {
@@ -84,6 +86,37 @@ class Output extends SymfonyStyle
     public function caution(string|array $message): void
     {
         $this->write(sprintf('<fg=black;bg=yellow>! %s</>', $message));
+        $this->newLine();
+    }
+
+    public function line(string $message, ?string $style = null): void
+    {
+        $styled = $style ? "<$style>$message</$style>" : $message;
+
+        $this->writeln($styled);
+    }
+
+    public function question(string|array $message): void
+    {
+        $this->write(sprintf('<fg=black;bg=cyan>? %s</>', $message));
+        $this->newLine();
+    }
+
+    public function title(string|array $message): void
+    {
+        $this->write(sprintf('<fg=default;bg=default;options=underscore> %s </>', $message));
+        $this->newLine();
+    }
+
+    public function labeledTitle(
+        string $label,
+        string $title,
+        string $labelStyle = 'fg=white;bg=green;options=bold',
+        string $labelPrefix = '➜ ',
+        string $labelSeparator = ' ',
+    ): void {
+        $this->write(sprintf('<%s>%s%s%s</>', $labelStyle, $labelPrefix, $label, $labelSeparator));
+        $this->write($title);
         $this->newLine();
     }
 

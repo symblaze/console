@@ -25,7 +25,7 @@ class MyCommand extends Command
         return self::SUCCESS;
     }
 
-    public function __call(string $name, array $arguments)
+    public function __call(string $name, array $arguments): mixed
     {
         return parent::$name(...$arguments);
     }
