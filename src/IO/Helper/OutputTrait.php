@@ -43,15 +43,10 @@ trait OutputTrait
     {
         return $this->output->confirm($question, $default);
     }
-
-    /**
-     * Writes a message to the output and adds a newline at the end.
-     */
+    
     protected function line(string $message, ?string $style = null): void
     {
-        $styled = $style ? "<$style>$message</$style>" : $message;
-
-        $this->output->writeln($styled);
+        $this->output->line($message, $style);
     }
 
     protected function note(string|array $message): void

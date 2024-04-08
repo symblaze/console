@@ -87,6 +87,13 @@ class Output extends SymfonyStyle
         $this->newLine();
     }
 
+    public function line(string $message, ?string $style = null): void
+    {
+        $styled = $style ? "<$style>$message</$style>" : $message;
+
+        $this->writeln($styled);
+    }
+
     private function autoPrependText(): void
     {
         $fetched = $this->bufferedOutput->fetch();
