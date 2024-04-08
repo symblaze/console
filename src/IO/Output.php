@@ -94,6 +94,12 @@ class Output extends SymfonyStyle
         $this->writeln($styled);
     }
 
+    public function question(string|array $message): void
+    {
+        $this->write(sprintf('<fg=black;bg=cyan>? %s</>', $message));
+        $this->newLine();
+    }
+
     private function autoPrependText(): void
     {
         $fetched = $this->bufferedOutput->fetch();

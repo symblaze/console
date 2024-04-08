@@ -43,7 +43,7 @@ trait OutputTrait
     {
         return $this->output->confirm($question, $default);
     }
-    
+
     protected function line(string $message, ?string $style = null): void
     {
         $this->output->line($message, $style);
@@ -56,7 +56,7 @@ trait OutputTrait
 
     protected function question(string|array $message): void
     {
-        $this->line($message, 'question');
+        $this->output->question($message);
     }
 
     protected function definitionList(string|array|TableSeparator ...$list): void
