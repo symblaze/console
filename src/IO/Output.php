@@ -13,7 +13,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 /**
  * The Symblaze output helper class.
  *
- * @internal - This class is for internal use only
+ * @internal  - This class is for internal use only
+ *
+ * @psalm-api - Provides a custom output helper for the console.
  */
 class Output extends SymfonyStyle
 {

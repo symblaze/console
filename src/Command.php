@@ -50,9 +50,7 @@ abstract class Command extends SymfonyCommand
             return $result;
         }
 
-        throw new RuntimeException(
-            'Either the `handle()` method must be implemented or the `execute()` method must be overridden.'
-        );
+        throw new RuntimeException('Either the `handle()` method must be implemented or the `execute()` method must be overridden.');
     }
 
     public function getInput(): InputInterface
