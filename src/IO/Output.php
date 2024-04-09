@@ -104,6 +104,7 @@ class Output extends SymfonyStyle
 
     public function title(string|array $message): void
     {
+        $this->newLine();
         $this->write(sprintf('<fg=default;bg=default;options=underscore>➜ %s </>', $message));
         $this->newLine();
     }
