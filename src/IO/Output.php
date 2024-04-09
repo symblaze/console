@@ -104,7 +104,7 @@ class Output extends SymfonyStyle
 
     public function title(string|array $message): void
     {
-        $this->write(sprintf('<fg=default;bg=default;options=underscore> %s </>', $message));
+        $this->write(sprintf('<fg=default;bg=default;options=underscore>➜ %s </>', $message));
         $this->newLine();
     }
 
@@ -115,8 +115,8 @@ class Output extends SymfonyStyle
         string $labelPrefix = '➜ ',
         string $labelSeparator = ' ',
     ): void {
-        $this->write(sprintf('<%s>%s%s%s</>', $labelStyle, $labelPrefix, $label, $labelSeparator));
-        $this->write($title);
+        $this->write(sprintf('<%s>%s%s</>', $labelStyle, $labelPrefix, $label));
+        $this->write(sprintf('%s%s', $labelSeparator, $title));
         $this->newLine();
     }
 
