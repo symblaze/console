@@ -6,8 +6,6 @@ namespace Symblaze\Console\IO;
 
 /**
  * @mixin Output
- *
- * @internal
  */
 trait IOTrait
 {
